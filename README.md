@@ -47,34 +47,74 @@ FloraSense addresses this need by integrating an external plant identification s
 
 # ✨ Key Backend Features
 
-RESTful API development using Spring Boot.
+  1. RESTful API development using Spring Boot.
+  2. User registration and login.
+  3. JWT authentication for protected endpoints.
+  4. BCrypt password hashing.
+  5. Role-based access control for user and administrator operations.
+  6. Plant image upload and external identification through Pl@ntNet.
+  7. Plant information retrieval and management.
+  8. Search, filtering, sorting, and pagination in supported endpoints.
+  9. Favorite plant management.
+  10. Plant identification history and record deletion.
+  11. Conditional deletion of image files when no other upload records reference them.
+  12. User and administrator dashboard statistics.
+  13. Trending and featured plant APIs.
+  14. CSV exports for supported data modules.
+  15. Soft deletion and restoration of plant records.
+  16. Centralized validation and exception handling.
 
-User registration and login.
+# 🏗️ System Architecture
+FloraSense follows a layered backend architecture. REST controllers receive client requests, service classes implement business logic, repositories manage database operations, and PostgreSQL stores application data.
 
-JWT authentication for protected endpoints.
+The plant identification service communicates with Pl@ntNet when processing uploaded images.
+             API Client / Postman
+                       
+                       | HTTP Requests
+                       v
+             +----------------------+
+             | Spring Boot REST API |
+             |                      |
+             | Controllers          |
+             +----------+-----------+
+                        |
+                        v
+             +----------------------+
+             | Service Layer        |
+             |                      |
+             | Business Logic       |
+             | Validation           |
+             | Plant Identification |
+             +-----+-----------+----+
+                   |           |
+                   v           v
+          +----------------+  +----------------+
+          | Spring Data    |  | Pl@ntNet API   |
+          | JPA / Hibernate|  |                |
+          +-------+--------+  +----------------+
+                  |
+                  v
+          +----------------+
+          | PostgreSQL     |
+          |                |
+          | Users          |
+          | Plant Info     |
+          | Plant Uploads  |
+          | Favorites      |
+          +----------------+
 
-BCrypt password hashing.
+Layer responsibilities
+- Controller layer: Exposes REST endpoints and handles HTTP requests and responses.
+- Service layer: Implements application rules, coordinates database operations, and integrates with Pl@ntNet.
+- Repository layer: Provides database access through Spring Data JPA.
+- Entity layer: Maps Java objects to PostgreSQL tables.
+- Security layer: Applies authentication and authorization rules.
+- External integration: Communicates with Pl@ntNet for image-based plant identification.
 
-Role-based access control for user and administrator operations.
+# 🗄️ Database Design
+FloraSense uses PostgreSQL as its relational database.
+<!-- <img width="892" height="731" alt="Screenshot 2026-10-25 030947" src="https://github.com/user-attachments/assets/f82a59b8-cea0-4ff0-a403-c6721806c6ab" /> -->
+<img width="915" height="610" alt="Plant_Care & Detection System" src="https://github.com/user-attachments/assets/d34ab351-dbf7-4c54-a98f-ef65e6d62e99" />
 
-Plant image upload and external identification through Pl@ntNet.
-
-Plant information retrieval and management.
-
-Search, filtering, sorting, and pagination in supported endpoints.
-
-Favorite plant management.
-
-Plant identification history and record deletion.
-
-Conditional deletion of image files when no other upload records reference them.
-
-User and administrator dashboard statistics.
-
-Trending and featured plant APIs.
-
-CSV exports for supported data modules.
-
-Soft deletion and restoration of plant records.
-
-Centralized validation and exception handling.  
+# 🛠️ Technology Stack
+<img width="945" height="716" alt="image" src="https://github.com/user-attachments/assets/ddaca8eb-c175-41e7-b0fe-bf76f993d5ee" />
